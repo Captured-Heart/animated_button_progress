@@ -1,6 +1,6 @@
-import 'package:animated_button_progress/shared/constants/app_colors.dart';
-import 'package:animated_button_progress/shared/constants/extensions.dart';
-import 'package:animated_button_progress/shared/constants/image_paths.dart';
+import 'package:animated_button_progress/constants/app_colors.dart';
+import 'package:animated_button_progress/constants/extensions.dart';
+import 'package:animated_button_progress/constants/image_paths.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:gusto_neumorphic/gusto_neumorphic.dart';
