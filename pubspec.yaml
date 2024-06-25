@@ -1,0 +1,28 @@
+name: animated_button_progress
+description: "Animated Button with Progress indicator."
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.4.1 <4.0.0"
+
+dependencies:
+  auto_size_text: ^3.0.0
+  cupertino_icons: ^1.0.6
+  flutter:
+    sdk: flutter
+  gusto_neumorphic: ^3.3.0
+
+dev_dependencies:
+  flutter_lints: ^3.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/
+  #   - images/a_dot_ham.jpeg
