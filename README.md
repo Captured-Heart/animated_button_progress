@@ -14,7 +14,8 @@
 
 ## AN INTRO VIDEO OF THE APP
 
-https://github.com/Captured-Heart/moniepoint_assessment_marcel/assets/69226443/d33b1af3-3300-4695-bb76-5b8aa1fd36f8
+
+
 
 </div>
 
