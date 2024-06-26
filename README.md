@@ -7,8 +7,7 @@
 
 <br/>
 [Figma link](https://www.figma.com/design/bNb6HRLZyGIFrPdCOOhf7A/Free-button-down?m=auto&t=RfX1SYFeF6ksq4pR-6) <br/>
-[Get APK here](https://drive.google.com/drive/u/0/folders/1JiqyjuY2ybc49v5xv7TmqjdiujqdHEgB)
-
+[Get APK here](https://drive.google.com/drive/u/0/folders/1JiqyjuY2ybc49v5xv7TmqjdiujqdHEgB) <br/>
 [View on the web](https://captured-heart.github.io/animated_button_progress/)
 
 <sub>Built by <a href="https://twitter.com/_Captured_Heart">Nkpozi Marcel Kelechi</a></sub>
