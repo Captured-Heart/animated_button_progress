@@ -1,10 +1,9 @@
+import 'package:animated_button_progress/circle_progress_painter.dart';
 import 'package:animated_button_progress/constants/app_colors.dart';
 import 'package:animated_button_progress/constants/extensions.dart';
 import 'package:animated_button_progress/constants/image_paths.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/foundation.dart';
 import 'package:gusto_neumorphic/gusto_neumorphic.dart';
-import 'dart:math' as math;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -110,7 +109,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   child: SizedBox.square(
                     dimension: context.sizeWidth(context.layout(LayoutEnums.desktop) ? 0.27 : 0.44),
                     child: CustomPaint(
-                      painter: _CircularProgressIndicatorPainter(
+                      painter: CircularProgressIndicatorPainter(
                         valueColor: AppColors.yellow100,
                         value: _animation.value,
                         headValue: 0.2,
@@ -205,132 +204,4 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           }),
     );
   }
-}
-
-class _CircularProgressIndicatorPainter extends CustomPainter {
-  _CircularProgressIndicatorPainter({
-    this.backgroundColor,
-    required this.valueColor,
-    required this.value,
-    required this.headValue,
-    required this.tailValue,
-    required this.offsetValue,
-    required this.rotationValue,
-    required this.strokeWidth,
-    required this.strokeAlign,
-    this.strokeCap,
-  })  : arcStart = value != null
-            ? _startAngle
-            : _startAngle +
-                tailValue * 3 / 2 * math.pi +
-                rotationValue * math.pi * 2.0 +
-                offsetValue * 0.5 * math.pi,
-        arcSweep = value != null
-            ? clampDouble(value, 0.0, 1.0) * _sweep
-            : math.max(headValue * 3 / 2 * math.pi - tailValue * 3 / 2 * math.pi, _epsilon);
-
-  final Color? backgroundColor;
-  final Color valueColor;
-  final double? value;
-  final double headValue;
-  final double tailValue;
-  final double offsetValue;
-  final double rotationValue;
-  final double strokeWidth;
-  final double strokeAlign;
-  final double arcStart;
-  final double arcSweep;
-  final StrokeCap? strokeCap;
-
-  static const double _twoPi = math.pi * 2.0;
-  static const double _epsilon = .001;
-  // Canvas.drawArc(r, 0, 2*PI) doesn't draw anything, so just get close.
-  static const double _sweep = _twoPi - _epsilon;
-  static const double _startAngle = -math.pi / 2.0;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()
-      ..color = valueColor
-      ..strokeWidth = strokeWidth
-      ..style = PaintingStyle.stroke;
-
-    // Use the negative operator as intended to keep the exposed constant value
-    // as users are already familiar with.
-    final double strokeOffset = strokeWidth / 2 * -strokeAlign;
-    final Offset arcBaseOffset = Offset(strokeOffset, strokeOffset);
-    final Size arcActualSize = Size(
-      size.width - strokeOffset * 2,
-      size.height - strokeOffset * 2,
-    );
-
-    if (backgroundColor != null) {
-      final Paint backgroundPaint = Paint()
-        ..color = backgroundColor!
-        ..strokeWidth = strokeWidth
-        ..style = PaintingStyle.stroke;
-      canvas.drawArc(
-        arcBaseOffset & arcActualSize,
-        0,
-        _sweep,
-        false,
-        backgroundPaint,
-      );
-    }
-
-    if (value == null && strokeCap == null) {
-      // Indeterminate
-      paint.strokeCap = StrokeCap.square;
-    } else {
-      // Butt when determinate (value != null) && strokeCap == null;
-      paint.strokeCap = strokeCap ?? StrokeCap.butt;
-    }
-
-    canvas.drawArc(
-      arcBaseOffset & arcActualSize,
-      arcStart,
-      arcSweep,
-      false,
-      paint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(_CircularProgressIndicatorPainter oldPainter) {
-    return oldPainter.backgroundColor != backgroundColor ||
-        oldPainter.valueColor != valueColor ||
-        oldPainter.value != value ||
-        oldPainter.headValue != headValue ||
-        oldPainter.tailValue != tailValue ||
-        oldPainter.offsetValue != offsetValue ||
-        oldPainter.rotationValue != rotationValue ||
-        oldPainter.strokeWidth != strokeWidth ||
-        oldPainter.strokeAlign != strokeAlign ||
-        oldPainter.strokeCap != strokeCap;
-  }
-}
-
-extension LayoutExtension on BuildContext {
-  bool layout(LayoutEnums layoutEnums) {
-    switch (layoutEnums) {
-      case LayoutEnums.mobile:
-        return isMobile();
-      case LayoutEnums.tablet:
-        return isTablet();
-      case LayoutEnums.desktop:
-        return isDesktop();
-    }
-  }
-
-  bool isMobile() => MediaQuery.of(this).size.width < 680;
-
-  bool isTablet() => MediaQuery.sizeOf(this).width < 980 && MediaQuery.sizeOf(this).width >= 680;
-
-  bool isDesktop() => MediaQuery.sizeOf(this).width >= 980;
-}
-
-enum LayoutEnums {
-  mobile,
-  tablet,
-  desktop,
 }

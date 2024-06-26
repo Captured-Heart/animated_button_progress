@@ -2,23 +2,13 @@
 <html>
 <head>
   <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for the base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
   -->
   <base href="/animated_button_progress/">
+  
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="description" content="Animated button with progress indicator.">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -34,5 +24,53 @@
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>
+  <div id="loading_indicator" class="loading">
+    <div class="loader"></div>
+  </div>
+
+<!-- from flutter web docs-->
+  <script>
+ var scriptLoaded = false;
+    function loadMainDartJs() {
+      if (scriptLoaded) {
+        return;
+      }
+      scriptLoaded = true;
+      var scriptTag = document.createElement('script');
+      scriptTag.src = 'main.dart.js';
+      scriptTag.type = 'application/javascript';
+      document.body.append(scriptTag);
+    }
+
+let useHtml = false;
+
+    window.addEventListener('load', function(ev) {
+    _flutter.loader.loadEntrypoint({
+      serviceWorker: {
+        serviceWorkerVersion: serviceWorkerVersion,
+      },
+      onEntrypointLoaded: function(engineInitializer) {
+        loadMainDartJs();
+        let config = {
+          renderer: useHtml ? "html" : "canvaskit",
+        };
+        engineInitializer.initializeEngine(config).then(function(appRunner) {
+          appRunner.runApp();
+        });
+      }
+    });
+  });
+  </script>
+
+<script>
+  window.onload = function () {
+    setTimeout(() => {
+      var loadingIndicator = document.getElementById("loading_indicator");
+      if (loadingIndicator) {
+        loadingIndicator.remove();
+      }
+    }, 10000);
+  }
+</script>
 </body>
 </html>
